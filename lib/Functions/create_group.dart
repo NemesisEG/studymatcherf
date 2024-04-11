@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../Models/Topic.dart';
 
 class CreateGroupPage extends StatelessWidget {
   final TextEditingController topicController = TextEditingController();
@@ -21,12 +20,12 @@ class CreateGroupPage extends StatelessWidget {
               controller: topicController,
               decoration: InputDecoration(labelText: 'Enter Topic'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 _createGroup(context);
               },
-              child: Text('Create Group'),
+              child: const Text('Create Group'),
             ),
           ],
         ),

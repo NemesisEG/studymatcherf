@@ -8,7 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     // Add your Firebase options here
-    options: FirebaseOptions(
+    options: const FirebaseOptions(
         apiKey: "AIzaSyBRIUSFtmqyD4xLG-yInVFKraYFiCIVXgQ",
         authDomain: "groupstudyplanner-96c44.firebaseapp.com",
         databaseURL:
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'StudyMatcher',
       theme: ThemeData(
         primarySwatch: Colors.green,

@@ -11,8 +11,23 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        backgroundColor: Colors.grey[700],
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'H O M E  P A G E',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          ),
       ),
+      //Working on the Home Page
+
+      backgroundColor: Colors.grey[300],
+
+
+
       drawer: Drawer(
         child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           future: FirebaseFirestore.instance
@@ -28,13 +43,13 @@ class HomePage extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   DrawerHeader(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.blue,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Welcome,',
                           style: TextStyle(
                             color: Colors.white,
@@ -43,7 +58,7 @@ class HomePage extends StatelessWidget {
                         ),
                         Text(
                           userData.name,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -53,7 +68,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    title: Text('Create Group'), // New button
+                    title: const Text('Create Group'), // New button
                     onTap: () {
                       Navigator.push(
                         context,
@@ -64,7 +79,7 @@ class HomePage extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    title: Text('Search Groups'), // New button
+                    title: const Text('Search Groups'), // New button
                     onTap: () {
                       Navigator.push(
                         context,
@@ -75,22 +90,22 @@ class HomePage extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    title: Text('Settings'),
+                    title: const Text('Settings'),
                     onTap: () {
                       // Navigate to settings page
                       // Add your navigation logic here
                     },
                   ),
                   ListTile(
-                    title: Text('Log Out'),
+                    title: const Text('Log Out'),
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
                       Navigator.pushReplacementNamed(context, '/');
                     },
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
-                    title: Text('My Groups'), // New section
+                    title: const Text('My Groups'), // New section
                     onTap: () {
                       Navigator.push(
                         context,
@@ -106,7 +121,7 @@ class HomePage extends StatelessWidget {
           },
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

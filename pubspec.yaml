@@ -2,14 +2,15 @@ name: studymatcherf
 description: "A new Flutter project."
 
 # Prevent accidental publishing to pub.dev.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.2 <4.0.0'
+  sdk: ">=3.3.2 <4.0.0"
 
 dependencies:
+  google_nav_bar: ^5.0.6
   firebase_core: ^2.27.2
   firebase_auth: 4.18.0
   flutter:
@@ -19,6 +20,7 @@ dependencies:
   google_sign_in: ^6.2.1
   shared_preferences: ^2.2.2
   cloud_firestore: ^4.15.10
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -34,4 +36,4 @@ flutter:
 
   assets:
     # Add assets from the images directory to the application.
-    - assets/images/
+    - lib/images/

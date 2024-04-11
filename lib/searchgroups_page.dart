@@ -23,7 +23,7 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter group name',
                 prefixIcon: Icon(Icons.search),
               ),
