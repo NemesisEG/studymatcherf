@@ -29,8 +29,9 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SafeArea(
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: SingleChildScrollView( // Wrap your Column with SingleChildScrollView
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 MyTextField(
                   controller: nameController,
                   hintText: "Name",
-                  obscureText: true,
+                  obscureText: false,
                 ),
                 const SizedBox(
                   height: 20,
@@ -58,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 MyTextField(
                   controller: emailController,
                   hintText: "Email",
-                  obscureText: true,
+                  obscureText: false,
                 ),
                 const SizedBox(
                   height: 20,
@@ -74,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 MyTextField(
                   controller: phoneController,
                   hintText: "Phone Number",
-                  obscureText: true,
+                  obscureText: false,
                 ),
                 const SizedBox(height: 20),
                 MyButton1(
@@ -176,7 +177,9 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   void _showErrorDialog(BuildContext context, String title, String message) {

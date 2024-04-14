@@ -8,24 +8,76 @@ class CreateGroupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Create Group'),
+        backgroundColor: Colors.grey[900],
+        centerTitle: true,
+        title: const Text(
+          'C R E A T E   Y O U R   O W N   G R O U P',
+          style: TextStyle(
+            color: Colors.deepPurple,
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               controller: topicController,
-              decoration: InputDecoration(labelText: 'Enter Topic'),
+              style: TextStyle(color: Colors.white), // Change text color to white
+              decoration: const InputDecoration(
+                labelText: 'Enter Title',
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                labelStyle: TextStyle(
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                fillColor: Color.fromARGB(255, 33, 33, 33),
+                filled: true,
+              ),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _createGroup(context);
-              },
-              child: const Text('Create Group'),
+            const SizedBox(
+                height: 10), // Add space between TextField and Button
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    _createGroup(context);
+                  },
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(0, 2), // Adjust the offset as needed
+                        ),
+                      ],
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset(
+                      'lib/icons/add_group1.png',
+                      width: 60,
+                      height: 60,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

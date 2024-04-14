@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:studymatcherf/home_page.dart';
 import 'package:studymatcherf/login_page.dart';
 import 'package:studymatcherf/register_page.dart';
+import 'splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,12 +32,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      initialRoute: '/',
+      // Set SplashScreen as initial route
+      initialRoute: '/splash',
       routes: {
-        '/': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
-        '/register': (context) => RegisterPage(),
-       // Add route for registration page
+        // Define routes
+        '/splash': (context) => SplashScreen(), // SplashScreen route
+        '/': (context) => LoginPage(),    // Login page route
+        '/home': (context) => HomePage(),       // Home page route
+        '/register': (context) => RegisterPage(), // Registration page route
       },
     );
   }

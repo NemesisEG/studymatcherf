@@ -14,25 +14,47 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Search Groups'),
+        backgroundColor: Colors.grey[900],
+        centerTitle: true,
+        title: const Text(
+          'S E A R C H  G R O U P S',
+          style: TextStyle(
+            color: Colors.deepPurple,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Column(
         children: [
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
-              decoration: const InputDecoration(
-                hintText: 'Enter group name',
-                prefixIcon: Icon(Icons.search),
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                fillColor: Colors.grey.shade300,
+                filled: true,
+                hintText: 'Search',
+                hintStyle: const TextStyle(color: Colors.deepPurple),
+                prefixIcon: const Icon(Icons.search, color: Colors.deepPurple),
               ),
               onChanged: (value) {
-                // Trigger search logic here
-                // You may want to use a debouncer or delay before triggering the search
+                setState(() {}); // Trigger rebuild when search query changes
               },
             ),
           ),
+          const SizedBox(height: 10.0), // Added SizedBox with a height of 16.0
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream:
@@ -48,11 +70,11 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
                       .toList();
 
                   // Filter groups based on search query
-                  if (_searchController.text.isNotEmpty) {
-                    final query = _searchController.text.toLowerCase();
+                  final query = _searchController.text.toLowerCase();
+                  if (query.isNotEmpty) {
                     groups = groups
-                        .where(
-                            (group) => group.name.toLowerCase().contains(query))
+                        .where((group) => _containsSubstrings(
+                            group.name.toLowerCase(), query))
                         .toList();
                   }
 
@@ -64,10 +86,26 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
                         onTap: () {
                           _joinGroup(topic.id);
                         },
-                        child: ListTile(
-                          title: Text(topic.name),
-                          trailing: _buildJoinButton(topic),
-                          // Add any other relevant information about the group
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                20.0), // Adjust the radius as needed
+                          ),
+                          color: Colors.grey[
+                              900], // Change the color to your desired color
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 16.0, horizontal: 20.0),
+                            title: Text(
+                              topic.name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            trailing: _buildJoinButton(topic),
+                            // Add any other relevant information about the group
+                          ),
                         ),
                       );
                     },
@@ -76,18 +114,53 @@ class _SearchGroupsPageState extends State<SearchGroupsPage> {
               },
             ),
           ),
+          const SizedBox(height: 20.0), // Added SizedBox with a height of 16.0
         ],
       ),
     );
+  }
+
+  // Function to check if the group name contains any part of the query
+  bool _containsSubstrings(String groupName, String query) {
+    int queryIndex = 0;
+    for (int i = 0; i < groupName.length; i++) {
+      if (groupName[i] == query[queryIndex]) {
+        queryIndex++;
+        if (queryIndex == query.length) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   Widget _buildJoinButton(Topic topic) {
     String userId = FirebaseAuth.instance.currentUser!.uid;
     bool isUserJoined = topic.joinedUsers.contains(userId);
     return ElevatedButton(
-      onPressed: isUserJoined ? null : () => _joinGroup(topic.id),
-      child: Text(isUserJoined ? 'Joined' : 'Join'),
-    );
+        onPressed: isUserJoined ? null : () => _joinGroup(topic.id),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+            if (states.contains(MaterialState.disabled)) {
+              // Color when button is disabled (User has already joined)
+              return Colors.grey.shade800;
+            }
+            // Color when button is enabled (User has not joined yet)
+            return Colors.deepPurple;
+          }),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(20.0), // Adjust the radius as needed
+            ),
+          ),
+        ),
+        child: Text(isUserJoined ? 'Joined' : 'Join',
+            style: const TextStyle(
+              fontSize: 12.0, // Adjust the font size as needed
+              fontWeight: FontWeight.bold,
+              color: Colors.white, // Text color
+            )));
   }
 
   void _joinGroup(String groupId) async {

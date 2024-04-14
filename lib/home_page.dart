@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:studymatcherf/MyGroupsPage.dart';
+import 'package:studymatcherf/profile_page.dart';
 import 'package:studymatcherf/searchgroups_page.dart';
 import 'package:studymatcherf/settings_page.dart';
 import '../Models/UserData.dart';
@@ -17,59 +17,77 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
+  //Selectable Pages on the Nav Bar
+
   final List<Widget> _pages = [
     CreateGroupPage(),
     MyGroupsPage(),
     SearchGroupsPage(),
     SettingsPage(),
-    
+  ];
+
+  //Icons for The Bottom Nav Bar
+  final List<Widget> _customIcons = [
+    Image.asset(
+      'lib/icons/add_group.png',
+      width: 40,
+      height: 40,
+      color: Colors.deepPurple,
+    ), // Custom icon for the first item
+    Image.asset('lib/icons/group.png',
+        width: 40,
+        height: 40,
+        color: Colors.deepPurple), // Custom icon for the second item
+    const Icon(
+      Icons.search,
+      size: 30,
+      color: Colors.deepPurple,
+    ),
+    const Icon(Icons.settings, size: 30, color: Colors.deepPurple),
   ];
 
   // State class implementation
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //The logic of the pages (Starts here)
+
       body: _pages[_selectedIndex],
-      bottomNavigationBar: Container(
-        color: Colors.black,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-          
-          child: GNav(
-            selectedIndex: _selectedIndex,
-            onTabChange: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            backgroundColor: Colors.black,
-            color: Colors.white,
-            activeColor: Colors.white,
-            tabBackgroundColor: Color.fromARGB(255, 63, 62, 62),
-            padding: EdgeInsets.all(16),
-            gap: 8,
-            tabs: [
-              GButton(
-                icon: Icons.home,
-                text: "CreateGroups",
-              ),
-              GButton(
-                icon: Icons.favorite,
-                text: "MyGroups",
-              ),
-              GButton(
-                icon: Icons.search,
-                text: "SearchGroups",
-              ),
-              GButton(
-                icon: Icons.settings,
-                text: "Settings",
-              ),
-              
-            ],
+      bottomNavigationBar: BottomNavigationBar(
+        
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+
+        //The logic of the pages (Ends here)
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.deepPurple,
+        unselectedItemColor: Colors.deepPurple.withOpacity(0.5),
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+
+        items: [
+          BottomNavigationBarItem(
+            icon: _customIcons[0],
+            label: 'CreateGroups',
           ),
-        ),
+          BottomNavigationBarItem(
+            icon: _customIcons[1],
+            label: 'MyGroups',
+          ),
+          BottomNavigationBarItem(
+            icon: _customIcons[2],
+            label: 'SearchGroups',
+          ),
+          BottomNavigationBarItem(
+            icon: _customIcons[3],
+            label: 'Settings',
+          ),
+        ],
       ),
     );
-    
   }
 }
